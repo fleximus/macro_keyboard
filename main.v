@@ -8,6 +8,8 @@ module main
 // same vendor HID reports the Windows app sends, over /dev/hidraw.
 import os
 
+const version = 'v1.0.0'
+
 const usage_text = 'macro_keyboard — configure the macro keyboard (VID 1189 PID 8890)
 
 USAGE:
@@ -21,6 +23,7 @@ COMMANDS:
   apply <file> [--dry-run]   Program many slots from a config file
   dump <slot> <action>       Print the exact reports for an action (no device)
   keys                       List supported key / media / mouse names
+  version                    Show the program version
   help                       Show this help
 
 SLOTS (slot number):
@@ -58,6 +61,9 @@ fn main() {
 	match cmd {
 		'help', '-h', '--help' {
 			println(usage_text)
+		}
+		'version', '-v', '--version' {
+			println('macro_keyboard ${version}')
 		}
 		'keys' {
 			print_key_names()
