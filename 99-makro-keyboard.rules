@@ -1,0 +1,11 @@
+# Give non-root users access to the macro keyboard's config interface.
+# Install:  sudo cp 99-macro-keyboard.rules /etc/udev/rules.d/
+#           sudo udevadm control --reload && sudo udevadm trigger
+# Then replug the keyboard.
+#
+# This tool talks to the device's vendor config interface (mi_01) through
+# libusb, which opens the USB device node in /dev/bus/usb/. That node is
+# root-only by default, so we relax it for this VID:PID. The hidraw rule is
+# harmless extra coverage for firmware variants that DO expose mi_01 as hidraw.
+SUBSYSTEM=="usb", ATTR{idVendor}=="1189", ATTR{idProduct}=="8890", MODE="0666", TAG+="uaccess"
+KERNEL=="hidraw*", ATTRS{idVendor}=="1189", ATTRS{idProduct}=="8890", MODE="0666", TAG+="uaccess"
